@@ -1,0 +1,57 @@
+<!-- Form -->
+<form autocomplete="off" novalidate class="form" [formGroup]="form">
+  @let nameCtrl = form.get('name');
+  @if (nameCtrl?.errors) {
+     <div class="red">
+      @if (nameCtrl?.hasError('required') && nameCtrl?.touched) {
+         <p>The name is required</p>
+      }
+      @if (nameCtrl?.hasError('maxlength') && nameCtrl?.touched) {
+        <p>The name max length is 5 characters</p>
+      }
+  </div>
+}
+  <div class="form-row">
+    <label for="name">Name</label>
+    <input formControlName="name" form id="name" type="text" />
+  </div>
+  @let levelCtrl = form.get('level');
+   @if (levelCtrl?.errors) {
+     <div class="red">
+      @if (levelCtrl?.hasError('required') && levelCtrl?.touched) {
+         <p>The level is required</p>
+      }
+  </div>
+}
+
+  <div class="form-row">
+    <label for="level">Level</label>
+    <select formControlName="level" id="level">
+      <option value="J">Junior</option>
+      <option value="M">Medium</option>
+      <option value="S">Senior</option>
+    </select>
+  </div>
+  @let depCtrl = form.get('department');
+   @if (depCtrl?.errors) {
+     <div class="red">
+      @if (depCtrl?.hasError('required') && depCtrl?.touched) {
+         <p>The department is required</p>
+      }
+  </div>
+}
+
+
+  <div class="form-row">
+    <label for="department">Department</label>
+    <select formControlName="department" id="department">
+      <option value="IT">IT</option>
+      <option value="Marketing">Marketing</option>
+      <option value="HR">HR</option>
+    </select>
+  </div>
+  <div class="form-buttons">
+    <button (click)="onSubmit()" [disabled]="form.invalid" type="submit">{{isEdit ? "save": "add"}}</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>

@@ -1,0 +1,10 @@
+@let emp = employee();
+
+@if (emp) {
+  <app-employee-form [employee]="emp" (editEmployee)="onEditEmployee($event)"></app-employee-form>
+}
+
+<!-- @if (employee) {
+  <app-employee [employee]="employee" />
+}
+ -->

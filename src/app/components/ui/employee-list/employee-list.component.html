@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <td>Name</td>
+      <td>Level</td>
+      <td></td>
+    </tr>
+  </thead>
+  @for (empl of employees(); track empl._id) {
+    <tr >
+      <td>{{empl.name}}</td>
+      <td>{{empl.level}}</td>
+      <td>
+        <button (click)="onEdit(empl._id)">Edit</button>
+        <button (click)="onDelete(empl._id)">Delete</button>
+        <button (click)="onDetails(empl._id)">Details</button>
+      </td>
+    </tr>
+  }
+
+
+</table>
