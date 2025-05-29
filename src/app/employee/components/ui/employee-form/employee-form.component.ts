@@ -1,4 +1,4 @@
-import { Employee } from './../../../models/employee.model';
+import { Employee } from '../../../models/employee.model';
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 @Component({

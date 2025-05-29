@@ -1,11 +1,12 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { EmployeeService } from '../../../services/employee.service';
 import { Employee } from '../../../models/employee.model';
 import { EmployeeComponent } from '../../ui/employee/employee.component';
 import { EmployeeFormComponent } from '../../ui/employee-form/employee-form.component';
+import { EmployeeApiService } from '../../../services/employee-api.service';
 
 @Component({
   selector: 'app-employee-edit-page',
@@ -16,14 +17,22 @@ import { EmployeeFormComponent } from '../../ui/employee-form/employee-form.comp
 export class EmployeeEditPageComponent {
   //route = inject(ActivatedRoute);
   route = inject(Router);
-  employeeService = inject(EmployeeService);
+  //employeeService = inject(EmployeeService);
+  employeeApiService = inject(EmployeeApiService)
   //employee: Employee | null = null;
 
   empId = input.required<string>();
-  employee = computed(() => {
+ /*  employee = computed(() => {
     const id = this.empId();
     return this.employeeService.getEmployee(id);
-  });
+  }); */
+
+  employeeRx = rxResource<Employee , string>({
+    request: () => this.empId(),
+    loader: ({ request: empId}) => this.employeeApiService.getEmployee(empId)
+  })
+
+  employee = computed(() => this.employeeRx.value())
   constructor() {
     // snapshot
     /* const employeeId = this.route.snapshot.params['empId'];
@@ -49,7 +58,7 @@ export class EmployeeEditPageComponent {
   }
 
   onEditEmployee(employee: Employee) {
-    this.employeeService.editEmployee(employee)
+    //this.employeeService.editEmployee(employee)
     this.route.navigate(['/employees']);
   }
 }
